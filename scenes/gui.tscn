@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgadblgbrgw4v"]
+
+[ext_resource type="Script" path="res://scripts/GUI.gd" id="1_ukfbn"]
+[ext_resource type="FontFile" uid="uid://t1erdgrt2tc" path="res://Assets/VT323-Regular.ttf" id="2_j73nk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0yhox"]
+bg_color = Color(0.0117647, 0.0196078, 0.0862745, 1)
+skew = Vector2(0.05, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pcr6c"]
+bg_color = Color(0.109804, 0.12549, 0.313726, 1)
+
+[sub_resource type="Animation" id="Animation_grkb0"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_awxxh"]
+resource_name = "fade_to_black"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Black:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0627451, 0.0627451, 0.0627451, 0), Color(0.0627451, 0.0627451, 0.0627451, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dykot"]
+resource_name = "fade_to_normal"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Black:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.0627451, 0.0627451, 0.0627451, 1), Color(0.0627451, 0.0627451, 0.0627451, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qpp2h"]
+_data = {
+"RESET": SubResource("Animation_grkb0"),
+"fade_to_black": SubResource("Animation_awxxh"),
+"fade_to_normal": SubResource("Animation_dykot")
+}
+
+[node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_ukfbn")
+
+[node name="textbox" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 720.0
+
+[node name="textbox_margins" type="MarginContainer" parent="textbox"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="border_panel" type="Panel" parent="textbox/textbox_margins"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0yhox")
+
+[node name="border_margins" type="MarginContainer" parent="textbox/textbox_margins"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="center_panel" type="Panel" parent="textbox/textbox_margins/border_margins"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pcr6c")
+
+[node name="MarginContainer" type="MarginContainer" parent="textbox/textbox_margins/border_margins"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="textbox/textbox_margins/border_margins/MarginContainer"]
+layout_mode = 2
+
+[node name="name" type="Label" parent="textbox/textbox_margins/border_margins/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_j73nk")
+theme_override_font_sizes/font_size = 36
+text = "Pluck"
+horizontal_alignment = 1
+
+[node name="text" type="Label" parent="textbox/textbox_margins/border_margins/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_j73nk")
+theme_override_font_sizes/font_size = 24
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+autowrap_mode = 2
+
+[node name="scene_transition" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 720.0
+
+[node name="Black" type="ColorRect" parent="scene_transition"]
+visible = false
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 718.0
+color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+
+[node name="animation_player" type="AnimationPlayer" parent="scene_transition"]
+libraries = {
+"": SubResource("AnimationLibrary_qpp2h")
+}

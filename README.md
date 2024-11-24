@@ -1,1 +1,2 @@
-# ShowerEscape
+# EscapeTheShower
+ Simple Puzzle Game
